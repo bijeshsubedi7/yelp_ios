@@ -8,13 +8,15 @@
 
 import UIKit
 
-class BusinessesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class BusinessesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate {
     
     var businesses: [Business]!
     
     @IBOutlet weak var tableView: UITableView!
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        createSearchBar()
         
         tableView.dataSource = self
         tableView.delegate = self
@@ -49,6 +51,15 @@ class BusinessesViewController: UIViewController, UITableViewDataSource, UITable
         
     }
     
+    func createSearchBar(){
+        let searchBar = UISearchBar()
+        searchBar.showsCancelButton = true
+        searchBar.placeholder = "Search Restaurants"
+        searchBar.sizeToFit()
+        searchBar.delegate = self
+        self.navigationItem.titleView = searchBar
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -66,6 +77,11 @@ class BusinessesViewController: UIViewController, UITableViewDataSource, UITable
         } else {
             return 0
         }
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.text = ""
+        searchBar.resignFirstResponder()
     }
     
 }
